@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 
 // Step:2 :- creating mongoose Schema
 const User = new mongoose.Schema({
-  firstName: {
+  firstname: {
     type: String,
     require: true,
   },
-  lastName: {
+  lastname: {
     type: String,
     require: false,
   },
@@ -15,7 +15,7 @@ const User = new mongoose.Schema({
     type: String,
     require: true,
   },
-  userName: {
+  username: {
     type: String,
     require: true,
   },

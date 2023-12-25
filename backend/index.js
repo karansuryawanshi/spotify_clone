@@ -7,21 +7,20 @@ const JwtStrategy = require("passport-jwt").Strategy,
 const passport = require("passport");
 
 const app = express();
-const port = 8000;
+const port = 8080;
+
+const authRoutes = require("./routes/auth");
+
+app.use(
+  express.json()
+); /*  this will make ensure to express that the response coming to it is in form of json */
 
 /* the connection is done in two steps 
     1. to put the link of database
     2. to put 2 option */
-
 mongoose
   .connect(
-    "mongodb+srv://karansuryawanshi:" +
-      process.env.MONGO_PASSWORD +
-      "@cluster0.powpyib.mongodb.net/?retryWrites=true&w=majority",
-
-    // below is for software
-    // "mongodb://127.0.0.1:27017/spotify?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.7.1",
-
+    "mongodb://127.0.0.1:27017/spotify?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.7.1",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -36,7 +35,6 @@ mongoose
 // ".then" is when above code is executed successfully (ezsnippet chain wali video thappad)
 
 // Passport-jwt setup from website
-
 let opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = "ThisKeyIsSupposeToBeSecret"; // this is just a keywords which is kept to be secret
@@ -63,7 +61,11 @@ app.get("/", (req, res) => {
   res.send("Hello Buddy");
 });
 
-// running express on port 8000
+app.use("/auth", authRoutes);
+/* this will use all the router present in approuter i.e from ./routes/auth folder
+which will make the url as localhost:8000/auth/regester */
+
 app.listen(port, () => {
+  // running express on port 8000
   console.log("app is running on port " + port);
 });

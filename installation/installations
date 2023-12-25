@@ -1,0 +1,13 @@
+npm i node
+
+npm i express
+
+npm i dotenv
+
+npm i mongoose
+
+npm i passport passport-jwt
+
+npm i bcrypt
+
+npm i jsonwebtoken
