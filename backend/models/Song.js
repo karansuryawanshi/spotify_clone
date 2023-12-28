@@ -7,12 +7,12 @@ const Song = mongoose.Schema({
   },
 
   thumbnail: {
-    type: string,
+    type: String,
     require: true,
   },
 
   track: {
-    type: string,
+    type: String,
     require: true,
   },
 

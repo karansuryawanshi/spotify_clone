@@ -54,28 +54,59 @@ router.post("/register", async (req, res) => {
   // This will return all the users
 });
 
-router.post("/login", async (req, res) => {
-  // Step 1:- taking email and password from user
-  const { email, password } = req.body;
-  // Step 2:- comparing email does it already exist. if not the "invalid credential"
+// router.post("/login", async (req, res) => {
+//   // Step 1:- taking email and password from user
+//   const { email, password } = req.body;
+//   // Step 2:- comparing email does it already exist. if not the "invalid credential"
 
+//   const user = await User.findOne({ email: email });
+//   if (!user) {
+//     return res.status(403).json({ err: "Invalid Credential" });
+//   }
+
+//   // Step 3:- comparing password. it will be compared the hashedpassword stored in database and hash tee password given while logging in
+//   // const isPasswordValid = await bcrypt.compare(password, user.password);
+//   const isPasswordValid = await bcrypt.compare(password, user.password);
+
+//   if (!isPasswordValid) {
+//     return res.status(403).json({ err: "Invalid Credential" });
+//   }
+//   // Step 4:- returning token
+//   const token = await getToken(user.email, user);
+//   const userToReturn = {
+//     ...user.toJSON(),
+//     token,
+//   };
+//   delete userToReturn.password;
+//   return res.status(200).json(userToReturn);
+// });
+
+router.post("/login", async (req, res) => {
+  // Step 1: Get email and password sent by user from req.body
+  const { email, password } = req.body;
+
+  // Step 2: Check if a user with the given email exists. If not, the credentials are invalid.
   const user = await User.findOne({ email: email });
   if (!user) {
-    return res.status(403).json({ err: "Invalid Credential" });
+    return res.status(403).json({ err: "Invalid credentials" });
   }
 
-  // Step 3:- comparing password. it will be compared the hashedpassword stored in database and hash tee password given while logging in
+  console.log(user);
+
+  // Step 3: If the user exists, check if the password is correct. If not, the credentials are invalid.
+  // This is a tricky step. Why? Because we have stored the original password in a hashed form, which we cannot use to get back the password.
+  // I cannot do : if(password === user.password)
+  // bcrypt.compare enabled us to compare 1 password in plaintext(password from req.body) to a hashed password(the one in our db) securely.
   const isPasswordValid = await bcrypt.compare(password, user.password);
-
+  // This will be true or false.
+  console.log(isPasswordValid);
   if (!isPasswordValid) {
-    return res.status(403).json({ err: "Invalid Credential" });
+    return res.status(403).json({ err: "Invalid credentials" });
   }
-  // Step 4:- returning token
+
+  // Step 4: If the credentials are correct, return a token to the user.
   const token = await getToken(user.email, user);
-  const userToReturn = {
-    ...user.toJSON(),
-    token,
-  };
+  const userToReturn = { ...user.toJSON(), token };
   delete userToReturn.password;
   return res.status(200).json(userToReturn);
 });

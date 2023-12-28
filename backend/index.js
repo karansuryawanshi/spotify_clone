@@ -5,11 +5,14 @@ require("dotenv").config();
 const JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
 const passport = require("passport");
+const User = require("./models/User");
 
 const app = express();
 const port = 8080;
 
 const authRoutes = require("./routes/auth");
+const songRoutes = require("./routes/song");
+const playlistRoutes = require("./routes/playlist");
 
 app.use(
   express.json()
@@ -37,20 +40,18 @@ mongoose
 // Passport-jwt setup from website
 let opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = "ThisKeyIsSupposeToBeSecret"; // this is just a keywords which is kept to be secret
+opts.secretOrKey = "ThisKeyIsSupposeToBeSecret";
+
 passport.use(
-  new JwtStrategy(opts, function (jwt_payload, done) {
-    User.findOne({ id: jwt_payload.sub }, function (err, user) {
-      if (err) {
-        return done(err, false);
-      }
-      if (user) {
-        return done(null, user);
-      } else {
-        return done(null, false);
-        // or you could create a new account
-      }
-    });
+  new JwtStrategy(opts, async function (jwt_payload, done) {
+    // By default the name of the name of statergy is jwt
+    // It can be set by using as eg:- "user" after passport.use("user" ..code)
+    const user = await User.findOne({ _id: jwt_payload.identifier });
+    if (user) {
+      return done(null, user);
+    } else {
+      return done(null, false);
+    }
   })
 );
 
@@ -62,6 +63,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
+app.use("/song", songRoutes);
+app.use("/playlist", playlistRoutes);
 /* this will use all the router present in approuter i.e from ./routes/auth folder
 which will make the url as localhost:8000/auth/regester */
 
