@@ -11,3 +11,54 @@ npm i passport passport-jwt
 npm i bcrypt
 
 npm i jsonwebtoken
+
+\***\*\*\*\*\*\*** Frontend **\*\***\*\*\*\***\*\***
+
+get tailwind css installation fron this
+https://v2.tailwindcss.com/docs/guides/create-react-app#setting-up-tailwind-css
+which include
+:------------
+
+1. npm install -D tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9
+2. npm install @craco/craco
+3. "start": "craco start",
+   "build": "craco build",
+   "test": "craco test",
+4. module.exports = {
+   style: {
+   postcss: {
+   plugins: [
+   require('tailwindcss'),
+   require('autoprefixer'),
+   ],
+   },
+   },
+   }
+5. npx tailwindcss-cli@latest init
+6. /_ ./src/index.css _/
+   @tailwind base;
+   @tailwind components;
+   @tailwind utilities;
+7. // src/index.js
+   import React from 'react';
+   import ReactDOM from 'react-dom';
+   import './index.css';
+   import App from './App';
+   import reportWebVitals from './reportWebVitals';
+
+ReactDOM.render(
+<React.StrictMode>
+<App />
+</React.StrictMode>,
+document.getElementById('root')
+);
+
+// ...
+
+npm i react-router-dom
+
+npm uninstall postcss
+
+npm install postcss@8
+
+npx tailwindcss@2 -i ./src/index.css -o ./src/output.css
