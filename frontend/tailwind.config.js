@@ -6,6 +6,14 @@ module.exports = {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
       },
+      height: {
+        "1/10": "10%",
+        "2/10": "20%",
+        "9/10": "90%",
+      },
+      backgroundColor: {
+        appbg: "#121212",
+      },
     },
   },
   variants: {

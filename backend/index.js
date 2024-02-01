@@ -14,6 +14,9 @@ const authRoutes = require("./routes/auth");
 const songRoutes = require("./routes/song");
 const playlistRoutes = require("./routes/playlist");
 
+const cors = require("cors");
+
+app.use(cors());
 app.use(
   express.json()
 ); /*  this will make ensure to express that the response coming to it is in form of json */

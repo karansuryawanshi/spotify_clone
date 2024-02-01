@@ -62,3 +62,6 @@ npm uninstall postcss
 npm install postcss@8
 
 npx tailwindcss@2 -i ./src/index.css -o ./src/output.css
+
+npx tailwindcss@2 build src/index.css -c tailwind.config.js -o src/output.css
+// run every time when we add custom css to tailwind

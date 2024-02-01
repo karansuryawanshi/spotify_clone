@@ -32,11 +32,22 @@ router.post(
 );
 
 // get song
+// router.get(
+//   "/get/mysong",
+//   passport.authenticate("jwt", { session: false }),
+//   async (req, res) => {
+//     // We need to get all songs where artist id == currentUser._id
+//     const songs = await Song.find({ artist: req.user._id }).populate("artist");
+//     return res.status(200).json({ data: songs });
+//   }
+// );
+
 router.get(
   "/get/mysong",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const songs = await Song.find({ artist: req.user._id });
+    // We need to get all songs where artist id == currentUser._id
+    const songs = await Song.find({ artist: req.user._id }).populate("artist");
     return res.status(200).json({ data: songs });
   }
 );

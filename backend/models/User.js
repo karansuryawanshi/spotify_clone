@@ -18,6 +18,7 @@ const User = new mongoose.Schema({
   password: {
     type: String,
     require: true,
+    private: true,
   },
   username: {
     type: String,
@@ -40,6 +41,6 @@ const User = new mongoose.Schema({
 
 // Step:3 :- Creating model
 
-const UserModel = mongoose.model("user", User);
+const UserModel = mongoose.model("User", User);
 
 module.exports = UserModel;
