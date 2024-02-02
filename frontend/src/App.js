@@ -26,7 +26,7 @@ function App() {
               <Route path="/" element={<div>Hello Buddy</div>} />
               <Route path="/home" element={<LogginHome />} />
               <Route path="/upload song" element={<UploadSong />} />
-              <Route path="/my music" element={<MyMusic />} />
+              <Route path="/mymusic" element={<MyMusic />} />
               <Route path="*" element={<Navigate to="/home" />} />
             </Routes>
           </songContext.Provider>
