@@ -36,7 +36,7 @@ const focusCardsData = [
 
 const LogginHome = () => {
   return (
-      <LoggedInContainer>
+      <LoggedInContainer curActiveScreen="home">
             <PlaylistView 
               titleText={"Focus"} 
               cardData={focusCardsData} 

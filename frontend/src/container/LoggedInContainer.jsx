@@ -1,31 +1,55 @@
-import React, { Children, useState } from "react";
+import React, { Children, useContext, useEffect, useRef, useState } from "react";
 import spotify_logo from "../assets/images/Spotify_Logo_CMYK_White.png";
 import IconText from "../component/shared/IconText";
 import { Icon } from "@iconify/react";
 import NavbarText from "../component/shared/NavbarText";
 import { useNavigate } from 'react-router-dom';
 import {Howl, Howler} from 'howler';
+import songContext from "../context/songContext";
 
 
 
-const LoggedInContainer = ({children}) => {
+const LoggedInContainer = ({children, curActiveScreen}) => {
 
-  const [soundPlayed, setSoundPlayed] = useState(null)
-  const [isPaused, setIsPaused] = useState(true)
 
-  const playSound = (songSrc)=>{
+
+  const {currentSong, setCurrentSong, soundPlayed, setSoundPlayed, isPaused, setIsPaused } = useContext(songContext)
+  
+  const firstupdate = useRef(true);
+
+  useEffect(()=>{
+    if(firstupdate.current){
+      firstupdate.current = false;
+      return;
+    }
+
+    if(!currentSong){
+      return;
+    }
+    changeSong(currentSong.track)
+  },[currentSong])
+
+  const playSound =() =>{
+    if(!soundPlayed){
+      return;
+    }
+    soundPlayed.play();
+  }
+
+  const changeSong = (songSrc)=>{
     if(soundPlayed){
       soundPlayed.stop();
     }
 
       let sound = new Howl ({
-        src:["https://res.cloudinary.com/dcjuzfafi/video/upload/v1705749307/psc3sdfx1csqjkgilssb.mp3"],
+        src:[currentSong.track],
         html5:true,
       }) 
       setSoundPlayed(sound);
       sound.play();
-      console.log("Song played")
-      console.log("played successfully")
+      setIsPaused(false)
+      // console.log("Song played")
+      // console.log("played successfully")
   }
 
   const pauseSound =()=>{ 
@@ -57,7 +81,8 @@ const LoggedInContainer = ({children}) => {
   return (
     <div className="w-screen h-screen flex">
       <div className="w-full h-full">
-        <div className="w-full h-9/10 flex">
+        {/* Recently updated ======================== */}
+        <div className={`${currentSong?"h-9/10":"h-full"} w-full flex`}>
         {/* Left Pannel */}
         <div className="h-full w-1/5 bg-black flex flex-col justify-between pb-10">
           <div>
@@ -68,19 +93,28 @@ const LoggedInContainer = ({children}) => {
               <IconText
                 iconName={"majesticons:home"}
                 displayText={"Home"}
-                active
+                targetLink={"/home"}
+                active={curActiveScreen === "home"}
               ></IconText>
 
-              <IconText iconName={"ion:search"} displayText={"Search"}></IconText>
+              <IconText 
+                iconName={"ion:search"} 
+                displayText={"Search"}
+                targetLink={"/search"}
+                active={curActiveScreen === "search"}
+              ></IconText>
 
               <IconText
                 iconName={"codicon:library"}
                 displayText={"Library"}
+                active={curActiveScreen === "library"}
               ></IconText>
 
               <IconText
                 iconName={"entypo:music"}
                 displayText={"My Music"}
+                targetLink={"/mymusic"}
+                active={curActiveScreen === "mymusic"}
               ></IconText>
 
             </div>
@@ -124,34 +158,29 @@ const LoggedInContainer = ({children}) => {
             </div>
           </div>
           <div className="content p-8 pt-0">
-            {/* <PlaylistView titleText={"Focus"} cardData={focusCardsData} />
-            <PlaylistView
-              titleText={"Spotify Playlist"}
-              cardData={focusCardsData}
-            />
-            <PlaylistView
-              titleText={"Sound of India"}
-              cardData={focusCardsData}
-            /> */}
           {children}
           </div>
           </div> 
         </div>
+        {
+          currentSong &&
         <div className=" w-full h-1/10 bg-black flex text-white pl-4">
           <div className="w-1/3 flex items-center">
-            <img src="https://plus.unsplash.com/premium_photo-1705927288742-393ba2746e32?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMnx8fGVufDB8fHx8fA%3D%3D" 
+            <img src={currentSong.thumbnail} 
               alt="currentImage" 
               className="h-10 w-10 rounded-sm"/>
               <div className="pl-4">
-                <div className="text-sm cursor-pointer hover:underline">Bandeya</div>
-                <div className="text-xs text-gray-500 cursor-pointer hover:underline">Karan Suryawanshi</div>
+                <div className="text-sm cursor-pointer hover:underline">{currentSong.name}</div>
+                <div className="text-xs text-gray-500 cursor-pointer hover:underline">{currentSong.artist.firstname}  {currentSong.artist.lastname}</div>
               </div>
             </div>
             <div className="w-1/2 flex items-center justify-center flex-col">
               <div className="flex w-1/2 justify-between">
               <Icon icon="solar:shuffle-outline" fontSize={27} className="text-gray-400 cursor-pointer hover:text-white" />
               <Icon icon="fluent:previous-32-filled" fontSize={27} className="text-gray-400 cursor-pointer hover:text-white"/>
-              <Icon icon="zondicons:pause-solid" fontSize={33} className="text-gray-400 cursor-pointer hover:text-white" onClick={togglePlayPause}/>
+              
+              <Icon icon={isPaused?"zondicons:pause-solid":"zondicons:play-outline"} fontSize={33} className="text-gray-400 cursor-pointer hover:text-white" onClick={togglePlayPause}/>
+
               <Icon icon="fluent:next-32-filled" fontSize={27} className="text-gray-400 cursor-pointer hover:text-white"/>
               <Icon icon="mdi:repeat" fontSize={27} className="text-gray-400 cursor-pointer hover:text-white"/>
               </div>
@@ -160,6 +189,7 @@ const LoggedInContainer = ({children}) => {
               Hell0
             </div>
           </div>
+        }
       </div>
     </div>
   );

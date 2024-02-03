@@ -33,7 +33,7 @@ const MyMusic = () => {
     },[])
   
   return (
-    <LoggedInContainer>
+    <LoggedInContainer curActiveScreen="mymusic">
       <div className="p-5">
           <div className="text-white text-xl font-semibold mb-4">
               My Song

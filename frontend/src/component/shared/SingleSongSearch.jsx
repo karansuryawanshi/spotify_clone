@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import songContext from '../../context/songContext'
 
-const SingleSongComponent = ({info,playSound}) => {
+const SingleSongSearch = ({info,playSound}) => {
 
   const {currentSong, setCurrentSong} = useContext(songContext);
   console.log(info)
@@ -20,7 +20,7 @@ const SingleSongComponent = ({info,playSound}) => {
         <div className='pl-4 text-white flex justify-center flex-col w-5/6'>
             <div className='justify-start cursor-pointer hover:underline'>{info.name}</div>
             <div className='text-gray-400 text-xs cursor-pointer hover:underline'>
-              {info.artist.firstname+ " " + info.artist.lastname}
+              {info.firstname+ " " + info.lastname}
             </div>
         </div>
         <div className='flex justify-center items-center w-1/6'>
@@ -31,4 +31,4 @@ const SingleSongComponent = ({info,playSound}) => {
   )
 }
 
-export default SingleSongComponent
+export default SingleSongSearch
