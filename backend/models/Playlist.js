@@ -11,7 +11,7 @@ const Playlist = mongoose.Schema({
   },
   owner: {
     type: mongoose.Schema.ObjectId,
-    ref: "user",
+    ref: "User",
   },
 
   // A song is array because a playlist contain multiple array

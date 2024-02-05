@@ -37,11 +37,31 @@ router.get(
   async (req, res) => {
     const playlistId = req.params.playlistId;
 
-    const playlist = await Playlist.findOne({ _id: playlistId });
+    const playlist = await Playlist.findOne({ _id: playlistId }).populate({
+      path: "song",
+      populate: {
+        path: "artist",
+      },
+    });
     if (!playlist) {
       return res.status(301).json({ err: "Invalid ID" });
     }
     return res.status(200).json(playlist);
+  }
+);
+
+// get all playlist made by me
+
+router.get(
+  "/get/me",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const artistId = req.user._id;
+
+    const playlists = await Playlist.find({ owner: artistId }).populate(
+      "owner"
+    );
+    return res.status(200).json({ data: playlists });
   }
 );
 
@@ -71,7 +91,9 @@ router.post(
     const currentUser = req.user;
     const { playlistId, songId } = req.body;
     // Step 1 :- Get the playlist if valid
-    const playlist = await Playlist.findOne({ _id: playlistId });
+    const playlist = await Playlist.findOne({ _id: playlistId }).populate(
+      "owner"
+    );
     if (!playlist) {
       return res.status(301).json({ err: "Playlist Does not exist" });
     }

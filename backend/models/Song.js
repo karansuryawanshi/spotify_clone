@@ -22,6 +22,6 @@ const Song = mongoose.Schema({
   },
 });
 
-const SongModel = mongoose.model("song", Song);
+const SongModel = mongoose.model("Song", Song);
 
 module.exports = SongModel;

@@ -6,17 +6,17 @@ import NavbarText from "../component/shared/NavbarText";
 import { useNavigate } from 'react-router-dom';
 import {Howl, Howler} from 'howler';
 import songContext from "../context/songContext";
+import CreatePlaylistModal from "../modals/CreatePlaylistModel";
+import AddtoPlaylistModel from "../../src/modals/AddToPlaylistModel"
+import { makeAuthenticatedGETRequest, makeAuthenticatedPOSTRequest } from "../utiles/server";
+import Name from "../component/shared/Name";
 
+const LoggedInContainer = ({children, curActiveScreen, setLastname}) => {
+  const {currentSong, setCurrentSong, soundPlayed, setSoundPlayed, isPaused, setIsPaused} = useContext(songContext)
+  const [createPlaylistModalOpen,setCreatePlaylistModalOpen] = useState(false)
+  const [playlsitOpenModel,setPlaylsitOpenModel] = useState(false)
 
-
-const LoggedInContainer = ({children, curActiveScreen}) => {
-
-
-
-  const {currentSong, setCurrentSong, soundPlayed, setSoundPlayed, isPaused, setIsPaused } = useContext(songContext)
-  
   const firstupdate = useRef(true);
-
   useEffect(()=>{
     if(firstupdate.current){
       firstupdate.current = false;
@@ -53,7 +53,6 @@ const LoggedInContainer = ({children, curActiveScreen}) => {
   }
 
   const pauseSound =()=>{ 
-
     if (soundPlayed && soundPlayed.pause) {
         soundPlayed.pause();
     }
@@ -67,10 +66,9 @@ const LoggedInContainer = ({children, curActiveScreen}) => {
     else{
       pauseSound()
     }
-    setIsPaused(!isPaused);
-    
+    setIsPaused(!isPaused); 
   }
-  
+
   const navigate = useNavigate();
   const navigated =()=>{
     navigate("/login")
@@ -78,8 +76,21 @@ const LoggedInContainer = ({children, curActiveScreen}) => {
   const navigateUpload =()=>{
     navigate("/upload song")
   }
+
+  const AddSongToPlayList = async (playlistId)=>{
+    const songId = currentSong._id
+    const payload = {playlistId, songId}
+    const response = await makeAuthenticatedPOSTRequest("/playlist/add/song",payload);
+    if(response.playlist._id){
+      setPlaylsitOpenModel(false)
+    }
+    
+  }
+
   return (
     <div className="w-screen h-screen flex">
+      {createPlaylistModalOpen && <CreatePlaylistModal closeModel={()=>setCreatePlaylistModalOpen(false)}/>}
+      {playlsitOpenModel && <AddtoPlaylistModel closeModel={()=>setPlaylsitOpenModel(false)} AddSongToPlayList={AddSongToPlayList}/>}
       <div className="w-full h-full">
         {/* Recently updated ======================== */}
         <div className={`${currentSong?"h-9/10":"h-full"} w-full flex`}>
@@ -107,6 +118,7 @@ const LoggedInContainer = ({children, curActiveScreen}) => {
               <IconText
                 iconName={"codicon:library"}
                 displayText={"Library"}
+                targetLink={"/library"}
                 active={curActiveScreen === "library"}
               ></IconText>
 
@@ -122,6 +134,7 @@ const LoggedInContainer = ({children, curActiveScreen}) => {
               <IconText
                 iconName={"basil:add-solid"}
                 displayText={"Create Playlist"}
+                onClick={()=>{setCreatePlaylistModalOpen(true)}}
               ></IconText>
 
               <IconText
@@ -152,7 +165,7 @@ const LoggedInContainer = ({children, curActiveScreen}) => {
                   <NavbarText displayText={"Upload Song"} />
                 </div>
                 <div className="bg-white text-black text-sm font-semibold h-2/3 px-3 flex items-center justify-center rounded-full cursor-pointer" onClick={navigated}>
-                  KM
+                <Name></Name>
                 </div>
               </div>
             </div>
@@ -186,7 +199,10 @@ const LoggedInContainer = ({children, curActiveScreen}) => {
               </div>
             </div>
             <div className="w-1/4 flex justify-end">
-              Hell0
+              <div className="flex justify-center items-center pr-5 space-x-3">
+              <Icon icon="solar:playlist-bold" fontSize={30} className="cursor-pointer" onClick={()=>{setPlaylsitOpenModel(true)}}/>
+              <Icon icon="ph:heart" fontSize={30} className="cursor-pointer"/>
+              </div>
             </div>
           </div>
         }

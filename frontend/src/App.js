@@ -11,11 +11,15 @@ import MyMusic from "./routes/MyMusic";
 import { useState } from "react";
 import songContext from "./context/songContext";
 import SearchPage from "./routes/SearchPage";
+import Library from "./routes/Library";
+import SinglePlayListView from "./routes/SinglePlayListView";
 
 function App() {
   const [currentSong, setCurrentSong] = useState(null);
   const [soundPlayed, setSoundPlayed] = useState(null);
   const [isPaused, setIsPaused] = useState(true);
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [cookies, setCookies] = useCookies(["token"]);
 
   console.log(cookies);
@@ -38,8 +42,13 @@ function App() {
               <Route path="/" element={<div>Hello Buddy</div>} />
               <Route path="/home" element={<LogginHome />} />
               <Route path="/upload song" element={<UploadSong />} />
+              <Route path="/Library" element={<Library />} />
               <Route path="/mymusic" element={<MyMusic />} />
               <Route path="/search" element={<SearchPage />}></Route>
+              <Route
+                path="/playlist/:playlistId"
+                element={<SinglePlayListView />}
+              ></Route>
               <Route path="*" element={<Navigate to="/home" />} />
             </Routes>
           </songContext.Provider>
