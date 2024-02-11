@@ -4,7 +4,6 @@ import songContext from '../../context/songContext'
 const SingleSongComponent = ({info,playSound}) => {
 
   const {currentSong, setCurrentSong} = useContext(songContext);
-  // console.log(info)
 
   return (
     <div className='p-2 flex hover:bg-gray-400 hover:bg-opacity-30 rounded-sm' 

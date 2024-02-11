@@ -3,7 +3,6 @@ const router = express.Router();
 const passport = require("passport");
 const { route } = require("./auth");
 const Playlist = require("../models/Playlist");
-const User = require("../models/User");
 const Song = require("../models/Song");
 const { clear } = require("console");
 

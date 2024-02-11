@@ -54,33 +54,6 @@ router.post("/register", async (req, res) => {
   // This will return all the users
 });
 
-// router.post("/login", async (req, res) => {
-//   // Step 1:- taking email and password from user
-//   const { email, password } = req.body;
-//   // Step 2:- comparing email does it already exist. if not the "invalid credential"
-
-//   const user = await User.findOne({ email: email });
-//   if (!user) {
-//     return res.status(403).json({ err: "Invalid Credential" });
-//   }
-
-//   // Step 3:- comparing password. it will be compared the hashedpassword stored in database and hash tee password given while logging in
-//   // const isPasswordValid = await bcrypt.compare(password, user.password);
-//   const isPasswordValid = await bcrypt.compare(password, user.password);
-
-//   if (!isPasswordValid) {
-//     return res.status(403).json({ err: "Invalid Credential" });
-//   }
-//   // Step 4:- returning token
-//   const token = await getToken(user.email, user);
-//   const userToReturn = {
-//     ...user.toJSON(),
-//     token,
-//   };
-//   delete userToReturn.password;
-//   return res.status(200).json(userToReturn);
-// });
-
 router.post("/login", async (req, res) => {
   // Step 1: Get email and password sent by user from req.body
   const { email, password } = req.body;
