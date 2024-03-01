@@ -9,7 +9,7 @@ import songContext from "../context/songContext";
 import CreatePlaylistModal from "../modals/CreatePlaylistModel";
 import AddtoPlaylistModel from "../../src/modals/AddToPlaylistModel"
 import { makeAuthenticatedGETRequest, makeAuthenticatedPOSTRequest } from "../utiles/server";
-import Name from "../component/shared/Name";
+// import Name from "../component/shared/Name";
 
 const LoggedInContainer = ({children, curActiveScreen, setLastname}) => {
   const {currentSong, setCurrentSong, soundPlayed, setSoundPlayed, isPaused, setIsPaused} = useContext(songContext)
@@ -165,7 +165,8 @@ const LoggedInContainer = ({children, curActiveScreen, setLastname}) => {
                   <NavbarText displayText={"Upload Song"} />
                 </div>
                 <div className="bg-white text-black text-sm font-semibold h-2/3 px-3 flex items-center justify-center rounded-full cursor-pointer" onClick={navigated}>
-                <Name></Name>
+                {/* <Name></Name> */}
+                KS
                 </div>
               </div>
             </div>

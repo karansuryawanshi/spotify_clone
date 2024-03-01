@@ -13,8 +13,6 @@ const SinglePlayListView = () => {
             const response = await makeAuthenticatedGETRequest("/playlist/get/playlist/"+playlistId)
             setPlaylistDetails(response)
             console.log(response)
-            // console.log("---------------------",response._id )
-            // console.log("****************",playlistDetails.name)
         };
 
         getData();

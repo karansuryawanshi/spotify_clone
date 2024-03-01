@@ -10,7 +10,6 @@ const Library = () => {
         const getData = async ()=>{
             const response = await makeAuthenticatedGETRequest("/playlist/get/me")
             setMyPlaylist(response.data)
-            // console.log(response.data)
         }  
         getData(); 
     },[])
@@ -34,7 +33,7 @@ const Library = () => {
   )
 }
 
-const Card = ({ title, description, imgUrl,playlistId }) => {
+const Card = ({ title, description, imgUrl, playlistId}) => {
   const navigate = useNavigate();
     return (
       <div className="bg-black bg-opacity-40 w-full p-3 rounded-lg" onClick={()=>{

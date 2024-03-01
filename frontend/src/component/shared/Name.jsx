@@ -12,15 +12,18 @@ const Name = () => {
         const getData = async()=>{
             const response = await makeAuthenticatedGETRequest(
                 "/song/get/mysong"
-            );
-            setFirstname(response.data[0].artist.firstname[0])
-            setLastname(response.data[0].artist.lastname[0])
+                );
+                console.log(response)
+                if(response.data){
+                  setFirstname(response.data[0].artist.firstname[0])
+                  setLastname(response.data[0].artist.lastname[0])
+                }
           };
         getData();
     },[])
   return (
-    <div>
-      {firstname}{lastname}
+    <div className='uppercase'>
+      {firstname} {lastname}
     </div>
   )
 }

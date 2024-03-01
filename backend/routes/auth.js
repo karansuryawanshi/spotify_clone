@@ -78,7 +78,7 @@ router.post("/login", async (req, res) => {
   }
 
   // Step 4: If the credentials are correct, return a token to the user.
-  const token = await getToken(user.email, user);
+  const token = await getToken(user._id);
   const userToReturn = { ...user.toJSON(), token };
   delete userToReturn.password;
   return res.status(200).json(userToReturn);
