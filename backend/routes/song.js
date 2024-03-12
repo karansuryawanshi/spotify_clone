@@ -24,23 +24,8 @@ router.post(
     const songDetail = { name, thumbnail, track, artist };
     const createdSong = await Song.create(songDetail);
     return res.status(200).json(createdSong);
-    // }
-    // catch (error) {
-    //   console.log("error is here ===================>");
-    // }
   }
 );
-
-// get song
-// router.get(
-//   "/get/mysong",
-//   passport.authenticate("jwt", { session: false }),
-//   async (req, res) => {
-//     // We need to get all songs where artist id == currentUser._id
-//     const songs = await Song.find({ artist: req.user._id }).populate("artist");
-//     return res.status(200).json({ data: songs });
-//   }
-// );
 
 router.get(
   "/get/mysong",
