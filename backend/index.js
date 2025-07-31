@@ -8,7 +8,7 @@ const passport = require("passport");
 const User = require("./models/User");
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 5000;
 
 const authRoutes = require("./routes/auth");
 const songRoutes = require("./routes/song");
@@ -20,10 +20,6 @@ app.use(cors());
 app.use(
   express.json()
 ); /*  this will make ensure to express that the response coming to it is in form of json */
-
-/* the connection is done in two steps 
-    1. to put the link of database
-    2. to put 2 option */
 mongoose
   .connect(
     "mongodb://127.0.0.1:27017/spotify?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.7.1",
