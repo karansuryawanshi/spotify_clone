@@ -8,7 +8,7 @@ const passport = require("passport");
 const User = require("./models/User");
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 
 const authRoutes = require("./routes/auth");
 const songRoutes = require("./routes/song");
