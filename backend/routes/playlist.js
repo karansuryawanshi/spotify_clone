@@ -1,11 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const passport = require("passport");
-const { route } = require("./auth");
-const Playlist = require("../models/Playlist");
-const Song = require("../models/Song");
-const { clear } = require("console");
+import express from "express";
+import passport from "passport";
+import Playlist from "../models/Playlist.js";
+import Song from "../models/Song.js";
 
+const router = express.Router();
 // create playlist
 router.post(
   "/create",
@@ -122,4 +120,4 @@ router.post(
   }
 );
 
-module.exports = router;
+export default router;

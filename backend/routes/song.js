@@ -1,9 +1,11 @@
 // compiled with error
-const express = require("express");
+
+import express from "express";
+import passport from "passport";
+import Song from "../models/Song.js";
+import User from "../models/User.js";
+
 const router = express.Router();
-const passport = require("passport");
-const Song = require("../models/Song");
-const User = require("../models/User");
 
 // create song
 router.post(
@@ -65,4 +67,4 @@ router.get(
   }
 );
 
-module.exports = router;
+export default router;

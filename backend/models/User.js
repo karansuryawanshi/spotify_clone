@@ -1,5 +1,5 @@
 // Step:1 :- Require Mongoose
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 // Step:2 :- creating mongoose Schema
 const User = new mongoose.Schema({
@@ -43,4 +43,4 @@ const User = new mongoose.Schema({
 
 const UserModel = mongoose.model("User", User);
 
-module.exports = UserModel;
+export default UserModel;

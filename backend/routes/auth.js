@@ -1,10 +1,11 @@
-const express = require("express");
-const router = express.Router();
-const User = require("../models/User");
-// const bcrypt = require("bcrypt");
-const bcrypt = require("bcryptjs");
+// const express = require("express");
 
-const { getToken } = require("../utils/helpers");
+import express from "express";
+import bcrypt from "bcryptjs";
+import User from "../models/User.js";
+import { getToken } from "../utils/helpers.js";
+
+const router = express.Router();
 
 router.post("/register", async (req, res) => {
   // Step 1 : Store the Credential in req.body
@@ -86,4 +87,4 @@ router.post("/login", async (req, res) => {
   return res.status(200).json(userToReturn);
 });
 
-module.exports = router;
+export default router;

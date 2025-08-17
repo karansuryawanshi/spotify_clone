@@ -13,6 +13,7 @@ import songContext from "./context/songContext";
 import SearchPage from "./routes/SearchPage";
 import Library from "./routes/Library";
 import SinglePlayListView from "./routes/SinglePlayListView";
+import Landing from "../src/routes/Landing";
 
 function App() {
   const [currentSong, setCurrentSong] = useState(null);
@@ -24,7 +25,7 @@ function App() {
 
   console.log(cookies);
   return (
-    <div className="App  font-poppins">
+    <div className="App font-poppins">
       <BrowserRouter>
         {cookies.token ? (
           // login
@@ -39,7 +40,7 @@ function App() {
             }}
           >
             <Routes>
-              <Route path="/" element={<div>Hello Buddy</div>} />
+              <Route path="/" element={<Landing></Landing>} />
               <Route path="/home" element={<LogginHome />} />
               <Route path="/upload song" element={<UploadSong />} />
               <Route path="/Library" element={<Library />} />

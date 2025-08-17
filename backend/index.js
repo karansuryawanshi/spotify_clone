@@ -1,20 +1,27 @@
-const express = require("express");
-const mongoose = require("mongoose");
-require("dotenv").config();
+import express from "express";
+import mongoose from "mongoose";
 
-const JwtStrategy = require("passport-jwt").Strategy,
-  ExtractJwt = require("passport-jwt").ExtractJwt;
-const passport = require("passport");
-const User = require("./models/User");
+// const JwtStrategy = require("passport-jwt").Strategy,
+// ExtractJwt = require("passport-jwt").ExtractJwt;
+// const passport = require("passport");
+import passport from "passport";
+import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
+import User from "./models/User.js";
+
+// const User = require("./models/User");
 
 const app = express();
 const port = process.env.PORT || 8080;
 
-const authRoutes = require("./routes/auth");
-const songRoutes = require("./routes/song");
-const playlistRoutes = require("./routes/playlist");
+import authRoutes from "./routes/auth.js";
+import songRoutes from "./routes/song.js";
+import playlistRoutes from "./routes/playlist.js";
+import dotenv from "dotenv";
+import cors from "cors";
 
-const cors = require("cors");
+dotenv.config();
+
+// const cors = require("cors");
 
 app.use(cors());
 app.use(
