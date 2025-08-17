@@ -29,7 +29,7 @@ app.use(
 ); /*  this will make ensure to express that the response coming to it is in form of json */
 mongoose
   .connect(
-    "MONGO_URI=mongodb+srv://karansuryawanshi:Test1234@cluster0.powpyib.mongodb.net/spotifyclone?retryWrites=true&w=majority&appName=Cluster0",
+    "mongodb+srv://karansuryawanshi:Test1234@cluster0.powpyib.mongodb.net/spotifyclone?retryWrites=true&w=majority&appName=Cluster0",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
