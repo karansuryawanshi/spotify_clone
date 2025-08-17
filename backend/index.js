@@ -29,7 +29,7 @@ app.use(
 ); /*  this will make ensure to express that the response coming to it is in form of json */
 mongoose
   .connect(
-    "mongodb://127.0.0.1:27017/spotify?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.7.1",
+    "MONGO_URI=mongodb+srv://karansuryawanshi:Test1234@cluster0.powpyib.mongodb.net/spotifyclone?retryWrites=true&w=majority&appName=Cluster0",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
